@@ -1,0 +1,14 @@
+description '从数据源中读取模型信息'
+
+dependencies {
+    implementation rootProject
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.google.guava:guava'
+    compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
+    compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    testImplementation 'com.h2database:h2'
+}
