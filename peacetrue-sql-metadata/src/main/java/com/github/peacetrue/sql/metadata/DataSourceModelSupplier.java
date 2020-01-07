@@ -10,10 +10,7 @@ import javax.sql.DataSource;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 从数据源中获取模型信息
@@ -36,7 +33,7 @@ public class DataSourceModelSupplier implements ModelSupplier {
     public DataSourceModelSupplier() {
     }
 
-    public DataSourceModelSupplier(@Nullable List<String> ignoredTableNames) {
+    public DataSourceModelSupplier(@Nullable Collection<String> ignoredTableNames) {
         if (!CollectionUtils.isEmpty(ignoredTableNames)) this.ignoredTableNames.addAll(ignoredTableNames);
     }
 

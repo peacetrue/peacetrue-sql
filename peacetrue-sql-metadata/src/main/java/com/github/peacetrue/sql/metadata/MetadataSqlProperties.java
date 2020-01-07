@@ -3,14 +3,16 @@ package com.github.peacetrue.sql.metadata;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author xiayx
  */
 @Data
 @ConfigurationProperties(prefix = "peacetrue.sql")
-public class ModelProperties {
+public class MetadataSqlProperties {
+
     /** 忽略的表名 */
-    private List<String> ignoredTableNames;
+    private Set<String> ignoredTableNames;
+
 }

@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ModelProperty {
 
-    /** 名称，lowerCamel格式，例如：lowerCamel */
+    /** 名称，lowerCamel格式，例如：personName */
     private String name;
     /** 类型 */
     private Class<?> type;
     /** 可否为空 */
     private Boolean nullable;
-    /** 可否为空 */
+    /** 属性长度 */
     private Integer size;
     /** 注释 */
     private String comment;

@@ -19,7 +19,7 @@ import java.util.List;
 @SpringBootTest(classes = {
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
-        ModelAutoConfiguration.class
+        MetadataSqlAutoConfiguration.class
 })
 @ActiveProfiles("model")
 public class DataSourceModelSupplierTest {

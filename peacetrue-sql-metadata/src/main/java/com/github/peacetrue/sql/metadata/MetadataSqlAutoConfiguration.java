@@ -11,14 +11,14 @@ import java.util.Objects;
  * @author xiayx
  */
 @Configuration
-@EnableConfigurationProperties(ModelProperties.class)
-public class ModelAutoConfiguration {
+@EnableConfigurationProperties(MetadataSqlProperties.class)
+public class MetadataSqlAutoConfiguration {
 
     public static final String DATA_SOURCE_MODEL_SUPPLIER = "dataSourceModelSupplier";
 
-    private ModelProperties properties;
+    private MetadataSqlProperties properties;
 
-    public ModelAutoConfiguration(ModelProperties properties) {
+    public MetadataSqlAutoConfiguration(MetadataSqlProperties properties) {
         this.properties = Objects.requireNonNull(properties);
     }
 

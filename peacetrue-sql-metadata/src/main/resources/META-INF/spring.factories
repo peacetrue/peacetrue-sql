@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.peacetrue.sql.metadata.ModelAutoConfiguration
+  com.github.peacetrue.sql.metadata.MetadataSqlAutoConfiguration
