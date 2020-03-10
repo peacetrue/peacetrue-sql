@@ -1,8 +1,8 @@
 description '从数据源中读取模型信息'
 
 dependencies {
-    implementation rootProject
-    implementation 'org.slf4j:slf4j-api'
+    api rootProject
+    api 'org.slf4j:slf4j-api'
     implementation 'com.google.guava:guava'
     compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
     compileOnly 'org.springframework.boot:spring-boot-configuration-processor'

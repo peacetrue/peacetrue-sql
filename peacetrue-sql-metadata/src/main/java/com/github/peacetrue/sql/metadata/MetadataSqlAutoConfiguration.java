@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * @author xiayx
@@ -25,7 +26,21 @@ public class MetadataSqlAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = DATA_SOURCE_MODEL_SUPPLIER)
     public DataSourceModelSupplier dataSourceModelSupplier() {
-        return new DataSourceModelSupplier(properties.getIgnoredTableNames());
+        return new DataSourceModelSupplier();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "TABLE_FILTER")
+    public Predicate<String> tableFilter() {
+        return tableName -> {
+            if (properties.getIncludeTableNames() != null) {
+                return properties.getIncludeTableNames().contains(tableName);
+            }
+            if (properties.getIgnoredTableNames() != null) {
+                return !properties.getIgnoredTableNames().contains(tableName);
+            }
+            return true;
+        };
     }
 
     @Bean

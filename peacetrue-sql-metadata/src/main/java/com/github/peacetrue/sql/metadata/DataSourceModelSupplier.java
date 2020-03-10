@@ -3,14 +3,16 @@ package com.github.peacetrue.sql.metadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * 从数据源中获取模型信息
@@ -28,14 +30,10 @@ public class DataSourceModelSupplier implements ModelSupplier {
     private ColumnNameToPropertyName columnNameToPropertyName;
     @Autowired
     private SqlTypeToJavaType sqlTypeToJavaType;
-    private Set<String> ignoredTableNames = new HashSet<>();
-
-    public DataSourceModelSupplier() {
-    }
-
-    public DataSourceModelSupplier(@Nullable Collection<String> ignoredTableNames) {
-        if (!CollectionUtils.isEmpty(ignoredTableNames)) this.ignoredTableNames.addAll(ignoredTableNames);
-    }
+    /** 表过滤器，返回true表示包含，false表示排除 */
+    @Autowired
+    @Qualifier("TABLE_FILTER")
+    private Predicate<String> tableFilter = tableName -> Boolean.TRUE;
 
     @Override
     public List<Model> getModels() {
@@ -54,7 +52,7 @@ public class DataSourceModelSupplier implements ModelSupplier {
         while (tables.next()) {
             String tableName = tables.getString("TABLE_NAME");
             logger.info("读取表[{}]", tableName);
-            if (ignoredTableNames.contains(tableName)) {
+            if (!tableFilter.test(tableName)) {
                 logger.debug("表[{}]已被配置为忽略", tableName);
                 continue;
             }

@@ -1,4 +1,4 @@
-= gradle 模板项目
+= SQL扩展组件
 xiayx <xiayouxue@hotmail.com>
 v1.0, 2019-08-23: SNAPSHOT
 :doctype: docbook

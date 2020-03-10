@@ -14,8 +14,8 @@ public interface SqlTypeToJavaType {
      * 获取java类型
      *
      * @param sqlType sql类型
-     * @return =
+     * @return java类型
      */
-    Class getJavaType(int sqlType);
+    Class<?> getJavaType(int sqlType);
 
 }

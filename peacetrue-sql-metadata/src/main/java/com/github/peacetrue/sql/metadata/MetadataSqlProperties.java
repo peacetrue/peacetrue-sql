@@ -12,6 +12,8 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "peacetrue.sql")
 public class MetadataSqlProperties {
 
+    /** 包含的表名 */
+    private Set<String> includeTableNames;
     /** 忽略的表名 */
     private Set<String> ignoredTableNames;
 
