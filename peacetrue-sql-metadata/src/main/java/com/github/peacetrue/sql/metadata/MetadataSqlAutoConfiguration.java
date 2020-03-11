@@ -29,7 +29,7 @@ public class MetadataSqlAutoConfiguration {
         return new DataSourceModelSupplier();
     }
 
-    @Bean
+    @Bean("TABLE_FILTER")
     @ConditionalOnMissingBean(name = "TABLE_FILTER")
     public Predicate<String> tableFilter() {
         return tableName -> {

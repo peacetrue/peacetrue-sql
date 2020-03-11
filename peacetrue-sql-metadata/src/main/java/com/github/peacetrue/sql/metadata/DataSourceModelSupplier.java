@@ -33,7 +33,7 @@ public class DataSourceModelSupplier implements ModelSupplier {
     /** 表过滤器，返回true表示包含，false表示排除 */
     @Autowired
     @Qualifier("TABLE_FILTER")
-    private Predicate<String> tableFilter = tableName -> Boolean.TRUE;
+    private Predicate<String> tableFilter;
 
     @Override
     public List<Model> getModels() {
