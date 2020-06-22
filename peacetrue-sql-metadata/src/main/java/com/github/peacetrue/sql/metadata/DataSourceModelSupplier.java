@@ -5,14 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import javax.annotation.Nullable;
 import javax.sql.DataSource;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * 从数据源中获取模型信息
@@ -57,11 +58,14 @@ public class DataSourceModelSupplier implements ModelSupplier {
                 continue;
             }
             String modelName = tableNameToModelName.getModelName(tableName);
-
             Model model = new Model();
             model.setName(modelName);
-            model.setComment(tables.getString("REMARKS"));
+            model.setComment(tables.getString(ColumnDescriptionUtils.REMARKS));
             model.setProperties(new ArrayList<>());
+            model.setPrimaryKeys(getPrimaryKeys(metaData.getPrimaryKeys(null, null, tableName)));
+            model.setPrimaryKeys(model.getPrimaryKeys().stream()
+                    .map(columnName -> columnNameToPropertyName.getPropertyName(tableName, columnName))
+                    .collect(Collectors.toList()));
             ResultSet columns = metaData.getColumns(null, null, tableName, null);
             while (columns.next()) {
                 String columnName = columns.getString(ColumnDescriptionUtils.COLUMN_NAME);
@@ -78,6 +82,14 @@ public class DataSourceModelSupplier implements ModelSupplier {
             models.add(model);
         }
         return models;
+    }
+
+    private List<String> getPrimaryKeys(ResultSet primaryKeys) throws SQLException {
+        List<String> names = new LinkedList<>();
+        while (primaryKeys.next()) {
+            names.add((String) primaryKeys.getObject(4));
+        }
+        return names;
     }
 
 

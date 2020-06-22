@@ -51,10 +51,9 @@ allprojects { project ->
         useJUnitPlatform()
     }
 
-
 }
 
 
-dependencies {
-    compile 'org.junit.vintage:junit-vintage-engine:5.6.2'
-}
+//dependencies {
+//    compile 'org.junit.vintage:junit-vintage-engine:5.6.2'
+//}
