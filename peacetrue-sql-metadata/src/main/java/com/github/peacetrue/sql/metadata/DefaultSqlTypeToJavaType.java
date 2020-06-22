@@ -3,6 +3,9 @@ package com.github.peacetrue.sql.metadata;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -31,10 +34,10 @@ public class DefaultSqlTypeToJavaType implements SqlTypeToJavaType {
         sqlTypeToJavaType.put(Types.CHAR, String.class);
         sqlTypeToJavaType.put(Types.VARCHAR, String.class);
         sqlTypeToJavaType.put(Types.LONGVARCHAR, String.class);
-        sqlTypeToJavaType.put(Types.DATE, Date.class);
-        sqlTypeToJavaType.put(Types.TIME, Time.class);
-        /*MAP.put(Types.TIMESTAMP, Timestamp.class);*/
-        sqlTypeToJavaType.put(Types.TIMESTAMP, Date.class);
+        sqlTypeToJavaType.put(Types.DATE, LocalDateTime.class);
+        sqlTypeToJavaType.put(Types.TIME, LocalTime.class);
+        sqlTypeToJavaType.put(Types.TIMESTAMP, LocalDateTime.class);
+
         sqlTypeToJavaType.put(Types.BINARY, Byte[].class);
         sqlTypeToJavaType.put(Types.VARBINARY, Byte[].class);
         sqlTypeToJavaType.put(Types.LONGVARBINARY, Byte[].class);
