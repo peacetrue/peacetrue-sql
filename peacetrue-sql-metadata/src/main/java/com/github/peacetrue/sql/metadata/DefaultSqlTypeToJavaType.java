@@ -17,6 +17,7 @@ public class DefaultSqlTypeToJavaType implements SqlTypeToJavaType {
 
     private static Map<Integer, Class<?>> getSqlTypeToJavaType() {
         Map<Integer, Class<?>> sqlTypeToJavaType = new HashMap<>();
+        sqlTypeToJavaType.put(Types.BOOLEAN, Boolean.class);
         sqlTypeToJavaType.put(Types.BIT, Boolean.class);
         sqlTypeToJavaType.put(Types.TINYINT, Byte.class);
         sqlTypeToJavaType.put(Types.SMALLINT, Short.class);

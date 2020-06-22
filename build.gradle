@@ -1,14 +1,21 @@
-plugins {
-    id("java-library")
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
-//    id("org.springframework.boot") version "1.5.20.RELEASE" apply(false)
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://repo.spring.io/plugins-release' }
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1+"
+    }
 }
 
 allprojects { project ->
 
     group "com.github.peacetrue.sql"
-    version "1.0.0-SNAPSHOT"
-    description "sql扩展"
+    version "2.0.0-SNAPSHOT"
+    description "SQL扩展"
 
     apply plugin: "java"
     apply plugin: "java-library"
@@ -24,10 +31,7 @@ allprojects { project ->
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.boot:spring-boot-dependencies:1.5.20.RELEASE"
-//            mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.8.RELEASE"
-            mavenBom "com.github.peacetrue:peacetrue-dependencies:1.0.4-SNAPSHOT"
-//            mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
+            mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
         }
     }
 
@@ -36,17 +40,21 @@ allprojects { project ->
         annotationProcessor "org.projectlombok:lombok"
         implementation("com.google.code.findbugs:jsr305")
 
-        testImplementation "junit:junit"
+        testImplementation 'org.junit.jupiter:junit-jupiter-api'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
         testCompileOnly "org.projectlombok:lombok"
         testAnnotationProcessor "org.projectlombok:lombok"
         testImplementation "ch.qos.logback:logback-classic"
     }
 
+    test {
+        useJUnitPlatform()
+    }
+
+
 }
 
 
-
-
-
-
-
+dependencies {
+    compile 'org.junit.vintage:junit-vintage-engine:5.6.2'
+}

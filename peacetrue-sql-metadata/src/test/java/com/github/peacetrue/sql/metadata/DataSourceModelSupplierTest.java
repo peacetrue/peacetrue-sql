@@ -30,6 +30,7 @@ public class DataSourceModelSupplierTest {
     @Test
     public void getModels() {
         List<Model> models = modelSupplier.getModels();
+        System.out.println(models);
         Assert.assertEquals(1, models.size());
     }
 }
