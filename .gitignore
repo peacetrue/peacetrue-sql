@@ -25,7 +25,8 @@ hs_err_pid*
 *.iws
 *.iml
 *.ipr
+.idea
 
-*/build
+**/build
 
 .gradle
