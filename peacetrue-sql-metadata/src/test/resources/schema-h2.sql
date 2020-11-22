@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS demo;
 CREATE TABLE demo
 (
     id            BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    code          VARCHAR(255)                      NOT NULL COMMENT '编码',
+    code          VARCHAR(255)                      NOT NULL COMMENT '编码.唯一',
     name          VARCHAR(255) COMMENT '名称',
     creator_id    BIGINT                            NOT NULL COMMENT '创建者主键',
     created_time  DATETIME                          NOT NULL COMMENT '创建时间',

@@ -15,6 +15,8 @@ public class Model {
 
     /** 名称，UpperCamel格式，例如：UpperCamel */
     private String name;
+    /** 本国 name */
+    private String nationalName;
     /** 属性 */
     private List<ModelProperty> properties;
     /** 主键属性名 */

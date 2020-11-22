@@ -1,21 +1,18 @@
 package com.github.peacetrue.sql.metadata;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 /**
  * @author xiayx
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
@@ -31,6 +28,6 @@ public class DataSourceModelSupplierTest {
     public void getModels() {
         List<Model> models = modelSupplier.getModels();
         System.out.println(models);
-        Assert.assertEquals(1, models.size());
+        Assertions.assertEquals(1, models.size());
     }
 }

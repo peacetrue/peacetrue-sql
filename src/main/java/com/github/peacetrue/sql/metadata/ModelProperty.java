@@ -16,6 +16,8 @@ public class ModelProperty {
 
     /** 名称，lowerCamel格式，例如：personName */
     private String name;
+    /** 本国 name */
+    private String nationalName;
     /** 类型 */
     private Class<?> type;
     /** 可否为空 */

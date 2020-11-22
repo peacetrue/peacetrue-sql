@@ -16,5 +16,7 @@ public class MetadataSqlProperties {
     private Set<String> includeTableNames;
     /** 忽略的表名 */
     private Set<String> ignoredTableNames;
+    /** 注释分隔符 */
+    private String commentSeparator = ".";
 
 }

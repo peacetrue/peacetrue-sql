@@ -16,6 +16,7 @@ import java.util.function.Predicate;
 public class MetadataSqlAutoConfiguration {
 
     public static final String DATA_SOURCE_MODEL_SUPPLIER = "dataSourceModelSupplier";
+    public static final String TABLE_FILTER = "TABLE_FILTER";
 
     private MetadataSqlProperties properties;
 
@@ -29,8 +30,8 @@ public class MetadataSqlAutoConfiguration {
         return new DataSourceModelSupplier();
     }
 
-    @Bean("TABLE_FILTER")
-    @ConditionalOnMissingBean(name = "TABLE_FILTER")
+    @Bean(TABLE_FILTER)
+    @ConditionalOnMissingBean(name = TABLE_FILTER)
     public Predicate<String> tableFilter() {
         return tableName -> {
             if (properties.getIncludeTableNames() != null) {
@@ -59,5 +60,11 @@ public class MetadataSqlAutoConfiguration {
     @ConditionalOnMissingBean(SqlTypeToJavaType.class)
     public SqlTypeToJavaType sqlTypeToJavaType() {
         return new DefaultSqlTypeToJavaType();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(CommentToNationalName.class)
+    public CommentToNationalName commentToNationalName() {
+        return new DefaultCommentToNationalName(properties.getCommentSeparator());
     }
 }

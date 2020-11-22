@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:1+"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
     }
 }
 
@@ -24,6 +24,7 @@ allprojects { project ->
 
     repositories {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url 'https://repo.spring.io/plugins-release' }
         mavenCentral()
         jcenter()
     }
@@ -31,7 +32,7 @@ allprojects { project ->
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
-            mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
+            mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
         }
     }
 

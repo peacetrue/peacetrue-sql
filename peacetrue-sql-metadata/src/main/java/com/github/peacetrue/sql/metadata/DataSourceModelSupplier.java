@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.github.peacetrue.sql.metadata.MetadataSqlAutoConfiguration.TABLE_FILTER;
+
 /**
  * 从数据源中获取模型信息
  *
@@ -31,9 +33,11 @@ public class DataSourceModelSupplier implements ModelSupplier {
     private ColumnNameToPropertyName columnNameToPropertyName;
     @Autowired
     private SqlTypeToJavaType sqlTypeToJavaType;
+    @Autowired
+    private CommentToNationalName commentToNationalName;
     /** 表过滤器，返回true表示包含，false表示排除 */
     @Autowired
-    @Qualifier("TABLE_FILTER")
+    @Qualifier(TABLE_FILTER)
     private Predicate<String> tableFilter;
 
     @Override
@@ -58,9 +62,11 @@ public class DataSourceModelSupplier implements ModelSupplier {
                 continue;
             }
             String modelName = tableNameToModelName.getModelName(tableName);
+            String tableComment = tables.getString(ColumnDescriptionUtils.REMARKS);
             Model model = new Model();
             model.setName(modelName);
-            model.setComment(tables.getString(ColumnDescriptionUtils.REMARKS));
+            model.setNationalName(commentToNationalName.getNationalName(tableName, tableComment));
+            model.setComment(tableComment);
             model.setProperties(new ArrayList<>());
             model.setPrimaryKeys(getPrimaryKeys(metaData.getPrimaryKeys(null, null, tableName)));
             model.setPrimaryKeys(model.getPrimaryKeys().stream()
@@ -70,12 +76,14 @@ public class DataSourceModelSupplier implements ModelSupplier {
             while (columns.next()) {
                 String columnName = columns.getString(ColumnDescriptionUtils.COLUMN_NAME);
                 logger.info("读取列[{}.{}]", tableName, columnName);
+                String columnComment = columns.getString(ColumnDescriptionUtils.REMARKS);
                 model.getProperties().add(new ModelProperty(
                         columnNameToPropertyName.getPropertyName(tableName, columnName),
+                        commentToNationalName.getNationalName(tableName, columnName, columnComment),
                         sqlTypeToJavaType.getJavaType(columns.getInt(ColumnDescriptionUtils.DATA_TYPE)),
                         ColumnDescriptionUtils.nullableToBoolean(columns.getInt(ColumnDescriptionUtils.NULLABLE)),
                         columns.getInt(ColumnDescriptionUtils.COLUMN_SIZE),
-                        columns.getString(ColumnDescriptionUtils.REMARKS)
+                        columnComment
                 ));
             }
             logger.debug("构造模型[{}]", model);
