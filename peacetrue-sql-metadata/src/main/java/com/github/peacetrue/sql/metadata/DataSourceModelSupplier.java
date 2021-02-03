@@ -1,5 +1,6 @@
 package com.github.peacetrue.sql.metadata;
 
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import static com.github.peacetrue.sql.metadata.MetadataSqlAutoConfiguration.TAB
  *
  * @author xiayx
  */
+@Setter
 public class DataSourceModelSupplier implements ModelSupplier {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -39,6 +41,8 @@ public class DataSourceModelSupplier implements ModelSupplier {
     @Autowired
     @Qualifier(TABLE_FILTER)
     private Predicate<String> tableFilter;
+    private String schemaPattern;
+    private String tableNamePattern;
 
     @Override
     public List<Model> getModels() {
@@ -53,7 +57,7 @@ public class DataSourceModelSupplier implements ModelSupplier {
     private List<Model> getModelsThrow() throws SQLException {
         List<Model> models = new ArrayList<>();
         DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
-        ResultSet tables = metaData.getTables(null, null, null, new String[]{"TABLE"});
+        ResultSet tables = metaData.getTables(schemaPattern, null, tableNamePattern, new String[]{"TABLE"});
         while (tables.next()) {
             String tableName = tables.getString("TABLE_NAME");
             logger.info("读取表[{}]", tableName);
@@ -68,11 +72,11 @@ public class DataSourceModelSupplier implements ModelSupplier {
             model.setNationalName(commentToNationalName.getNationalName(tableName, tableComment));
             model.setComment(tableComment);
             model.setProperties(new ArrayList<>());
-            model.setPrimaryKeys(getPrimaryKeys(metaData.getPrimaryKeys(null, null, tableName)));
+            model.setPrimaryKeys(getPrimaryKeys(metaData.getPrimaryKeys(schemaPattern, null, tableName)));
             model.setPrimaryKeys(model.getPrimaryKeys().stream()
                     .map(columnName -> columnNameToPropertyName.getPropertyName(tableName, columnName))
                     .collect(Collectors.toList()));
-            ResultSet columns = metaData.getColumns(null, null, tableName, null);
+            ResultSet columns = metaData.getColumns(schemaPattern, null, tableName, null);
             while (columns.next()) {
                 String columnName = columns.getString(ColumnDescriptionUtils.COLUMN_NAME);
                 logger.info("读取列[{}.{}]", tableName, columnName);

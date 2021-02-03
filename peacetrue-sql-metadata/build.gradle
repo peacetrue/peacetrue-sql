@@ -10,5 +10,6 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    testImplementation 'com.h2database:h2'
+//    testImplementation 'com.h2database:h2'
+    testImplementation 'mysql:mysql-connector-java:8.0.21'
 }

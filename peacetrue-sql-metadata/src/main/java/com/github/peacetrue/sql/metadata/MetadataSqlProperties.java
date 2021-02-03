@@ -3,6 +3,7 @@ package com.github.peacetrue.sql.metadata;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.sql.DatabaseMetaData;
 import java.util.Set;
 
 /**
@@ -18,5 +19,9 @@ public class MetadataSqlProperties {
     private Set<String> ignoredTableNames;
     /** 注释分隔符 */
     private String commentSeparator = ".";
+    /** see {@link DatabaseMetaData#getTables(String, String, String, String[])} */
+    private String schemaPattern;
+    /** see {@link DatabaseMetaData#getTables(String, String, String, String[])} */
+    private String tableNamePattern;
 
 }

@@ -18,7 +18,7 @@ import java.util.List;
         DataSourceTransactionManagerAutoConfiguration.class,
         MetadataSqlAutoConfiguration.class
 })
-@ActiveProfiles("model")
+@ActiveProfiles("mysql")
 public class DataSourceModelSupplierTest {
 
     @Autowired

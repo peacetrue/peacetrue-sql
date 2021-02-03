@@ -27,7 +27,10 @@ public class MetadataSqlAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(name = DATA_SOURCE_MODEL_SUPPLIER)
     public DataSourceModelSupplier dataSourceModelSupplier() {
-        return new DataSourceModelSupplier();
+        DataSourceModelSupplier supplier = new DataSourceModelSupplier();
+        supplier.setSchemaPattern(properties.getSchemaPattern());
+        supplier.setTableNamePattern(properties.getTableNamePattern());
+        return supplier;
     }
 
     @Bean(TABLE_FILTER)
